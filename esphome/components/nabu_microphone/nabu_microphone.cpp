@@ -293,13 +293,13 @@ void NabuMicrophone::read_task_(void *params) {
               for (size_t i = 0; i < frames_read; i+=3) {
                 int32_t channel_0_sample = 0;
                 if ((this_microphone->channel_0_ != nullptr) && (!this_microphone->channel_0_->get_mute_state())) {
-                  channel_0_sample = buffer[NUMBER_OF_CHANNELS * i] >> channel_0_shift;
+                  channel_0_sample = buffer[NUMBER_OF_CHANNELS * i/3] >> channel_0_shift;
                   channel_0_samples[i] = (int16_t) clamp<int32_t>(channel_0_sample, INT16_MIN, INT16_MAX);
                 }
 
                 int32_t channel_1_sample = 0;
                 if ((this_microphone->channel_1_ != nullptr) && (!this_microphone->channel_1_->get_mute_state())) {
-                  channel_1_sample = buffer[NUMBER_OF_CHANNELS * i + 1] >> channel_1_shift;
+                  channel_1_sample = buffer[NUMBER_OF_CHANNELS * i/3 + 1] >> channel_1_shift;
                   channel_1_samples[i] = (int16_t) clamp<int32_t>(channel_1_sample, INT16_MIN, INT16_MAX);
                 }
               }
