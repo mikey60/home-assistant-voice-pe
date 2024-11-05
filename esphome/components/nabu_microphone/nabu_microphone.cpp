@@ -290,7 +290,7 @@ void NabuMicrophone::read_task_(void *params) {
                 channel_1_shift -= this_microphone->channel_1_->get_amplify_shift();
               }
 
-              for (size_t i = 0; i < frames_read; i++) {
+              for (size_t i = 0; i < frames_read; i+=3) {
                 int32_t channel_0_sample = 0;
                 if ((this_microphone->channel_0_ != nullptr) && (!this_microphone->channel_0_->get_mute_state())) {
                   channel_0_sample = buffer[NUMBER_OF_CHANNELS * i] >> channel_0_shift;
