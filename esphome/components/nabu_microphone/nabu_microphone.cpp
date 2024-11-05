@@ -304,7 +304,7 @@ void NabuMicrophone::read_task_(void *params) {
                 }
               }
 
-              size_t bytes_to_write = frames_read * sizeof(int16_t);
+              size_t bytes_to_write = frames_read/3 * sizeof(int16_t);
 
               if (this_microphone->channel_0_ != nullptr) {
                 this_microphone->channel_0_->get_ring_buffer()->write((void *) channel_0_samples.data(),
