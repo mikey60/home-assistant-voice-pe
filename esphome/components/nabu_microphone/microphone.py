@@ -75,7 +75,7 @@ BASE_SCHEMA = cv.Schema(
     {
         cv.GenerateID(): cv.declare_id(NabuMicrophone),
         cv.GenerateID(CONF_I2S_AUDIO_ID): cv.use_id(I2SAudioComponent),
-        cv.Optional(CONF_SAMPLE_RATE, default=48000): cv.int_range(min=1),
+        cv.Optional(CONF_SAMPLE_RATE, default=16000): cv.int_range(min=1),
         cv.Optional(CONF_BITS_PER_SAMPLE, default="32bit"): cv.All(
             _validate_bits, cv.enum(I2S_BITS_PER_SAMPLE)
         ),
