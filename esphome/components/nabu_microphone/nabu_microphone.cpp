@@ -147,7 +147,7 @@ esp_err_t NabuMicrophone::start_i2s_driver_() {
       .fixed_mclk = 0,
       .mclk_multiple = I2S_MCLK_MULTIPLE_256,
       .bits_per_chan = I2S_BITS_PER_CHAN_DEFAULT,
-  ESP_LOGD(TAG, "sample_rate is %d",this->sample_rate_);
+  ESP_LOGD(TAG, "sample_rate is %d",.sample_rate);
 #if SOC_I2S_SUPPORTS_TDM
       .chan_mask = (i2s_channel_t) (I2S_TDM_ACTIVE_CH0 | I2S_TDM_ACTIVE_CH1),
       .total_chan = 2,
