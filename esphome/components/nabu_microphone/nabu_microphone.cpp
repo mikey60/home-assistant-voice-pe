@@ -73,7 +73,7 @@ void NabuMicrophoneChannel::loop() {
 
 void NabuMicrophone::setup() {
   ESP_LOGCONFIG(TAG, "Setting up I2S Audio Microphone...");
-  ESP_LOGD(TAG, "sample_rate is %d",this->sample_rate_);
+  ESP_LOGE(TAG, "sample_rate is %d",this->sample_rate_);
   #if SOC_I2S_SUPPORTS_ADC
   if (this->adc_) {
     if (this->parent_->get_port() != I2S_NUM_0) {
