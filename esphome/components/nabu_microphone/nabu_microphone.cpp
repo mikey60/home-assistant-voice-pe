@@ -46,6 +46,7 @@ enum TaskNotificationBits : uint32_t {
 
 void NabuMicrophoneChannel::setup() {
   const size_t ring_buffer_size = RING_BUFFER_LENGTH * this->parent_->get_sample_rate() / 1000 * sizeof(int16_t);
+  ESP_LOGE(TAG, "sample_rate is %d",this->sample_rate_);
   this->ring_buffer_ = RingBuffer::create(ring_buffer_size);
   if (this->ring_buffer_ == nullptr) {
     ESP_LOGE(TAG, "Could not allocate ring buffer");
@@ -73,7 +74,6 @@ void NabuMicrophoneChannel::loop() {
 
 void NabuMicrophone::setup() {
   ESP_LOGCONFIG(TAG, "Setting up I2S Audio Microphone...");
-  ESP_LOGE(TAG, "sample_rate is %d",this->sample_rate_);
   #if SOC_I2S_SUPPORTS_ADC
   if (this->adc_) {
     if (this->parent_->get_port() != I2S_NUM_0) {
