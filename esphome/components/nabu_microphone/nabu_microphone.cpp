@@ -156,7 +156,6 @@ esp_err_t NabuMicrophone::start_i2s_driver_() {
       .skip_msk = false,
 #endif
   };
-  ESP_LOGD(TAG, "sample_rate is %d",this->sample_rate_);
 
 #if SOC_I2S_SUPPORTS_ADC
   if (this->adc_) {
