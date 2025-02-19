@@ -618,6 +618,8 @@ void VoiceAssistant::request_stop() {
       this->desired_state_ = State::IDLE;
       break;
     case State::AWAITING_RESPONSE:
+      this->signal_stop_();
+      break;
     case State::STREAMING_RESPONSE:
     case State::RESPONSE_FINISHED:
       break;  // Let the incoming audio stream finish then it will go to idle.
@@ -894,6 +896,7 @@ void VoiceAssistant::on_announce(const api::VoiceAssistantAnnounceRequest &msg) 
 }
 
 void VoiceAssistant::on_set_configuration(const std::vector<std::string> &active_wake_words) {
+#ifdef USE_MICRO_WAKE_WORD
   if (this->micro_wake_word_) {
     // Disable all wake words first
     for (auto &model : this->micro_wake_word_->get_wake_words()) {
@@ -910,12 +913,14 @@ void VoiceAssistant::on_set_configuration(const std::vector<std::string> &active
       }
     }
   }
+#endif
 };
 
 const Configuration &VoiceAssistant::get_configuration() {
   this->config_.available_wake_words.clear();
   this->config_.active_wake_words.clear();
 
+#ifdef USE_MICRO_WAKE_WORD
   if (this->micro_wake_word_) {
     this->config_.max_active_wake_words = 1;
 
@@ -933,9 +938,12 @@ const Configuration &VoiceAssistant::get_configuration() {
       this->config_.available_wake_words.push_back(std::move(wake_word));
     }
   } else {
+#endif
     // No microWakeWord
     this->config_.max_active_wake_words = 0;
+#ifdef USE_MICRO_WAKE_WORD
   }
+#endif
 
   return this->config_;
 };

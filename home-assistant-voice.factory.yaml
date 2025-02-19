@@ -31,7 +31,7 @@ update:
     source: https://firmware.esphome.io/home-assistant-voice-pe/home-assistant-voice/manifest.json
 
 dashboard_import:
-  package_import_url: github://esphome/voice-kit/home-assistant-voice.yaml
+  package_import_url: github://esphome/home-assistant-voice-pe/home-assistant-voice.yaml
 
 wifi:
   on_connect:
@@ -40,6 +40,9 @@ wifi:
     - script.execute: control_leds
 
 improv_serial:
+
+esp32_ble:
+  name: ha-voice-pe
 
 esp32_improv:
   authorizer: center_button
@@ -59,12 +62,14 @@ switch:
     name: Beta firmware
     icon: "mdi:test-tube"
     disabled_by_default: true
-    entity_category: diagnostic
+    entity_category: config
     optimistic: true
     restore_mode: RESTORE_DEFAULT_OFF
     on_turn_on:
       - logger.log: "OTA updates set to use Beta firmware"
       - lambda: id(update_http_request).set_source_url("https://firmware.esphome.io/home-assistant-voice-pe/home-assistant-voice/manifest-beta.json");
+      - component.update: update_http_request
     on_turn_off:
       - logger.log: "OTA updates set to use Production firmware"
       - lambda: id(update_http_request).set_source_url("https://firmware.esphome.io/home-assistant-voice-pe/home-assistant-voice/manifest.json");
+      - component.update: update_http_request
